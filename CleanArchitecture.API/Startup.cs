@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using CleanArchitecture.API.Filters;
+using CleanArchitecture.API.Pipeline;
 using CleanArchitecture.Application;
+using CleanArchitecture.Application.Contacts.Queries.GetContactPreview;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace CleanArchitecture.API
 {
@@ -26,8 +25,23 @@ namespace CleanArchitecture.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // Add Mediatr
+            services.AddMediatR(typeof(GetContactPreviewHandler).GetTypeInfo().Assembly);  
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+            services
+                .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetContactPreviewValidator>());
+
+            // Add DbContext
             services.ConfigureDBContext(Configuration);
+
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1";
+                //document.ApiGroupNames = new[] { "1" };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +59,12 @@ namespace CleanArchitecture.API
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUi3(settings =>
+            {
+                settings.Path = "/api";
+            });
         }
     }
 }

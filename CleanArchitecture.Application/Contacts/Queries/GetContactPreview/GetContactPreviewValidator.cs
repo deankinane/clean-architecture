@@ -5,9 +5,9 @@ using FluentValidation;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetContactPreview
 {
-    public class GetContactPreviewValidation : AbstractValidator<GetContactPreviewQuery>
+    public class GetContactPreviewValidator : AbstractValidator<GetContactPreviewQuery>
     {
-        public GetContactPreviewValidation()
+        public GetContactPreviewValidator()
         {
             RuleFor(q => q.ContactId).NotEmpty();
         }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Contacts.Models;
-using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence;
 using MediatR;
-using CleanArchitecture.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using CleanArchitecture.Application.Contacts.QueryObjects;
+using CleanArchitecture.Application.Contacts.Queries.Models;
+using CleanArchitecture.Application.Contacts.Queries.QueryObjects;
+using CleanArchitecture.Application.Exceptions;
+using CleanArchitecture.Domain.Entities;
 using System.Linq;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetContactPreview
@@ -28,15 +25,16 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetContactPreview
             var contact = await _context.Contacts
                 .AsNoTracking()
                 .Include(c => c.Tasks)
-                .ToContactPreviewDto()
-                .FirstAsync(x => x.ContactId == request.ContactId);
+                .Where(x => x.ContactId == request.ContactId)
+                .DefaultIfEmpty(null)
+                .FirstOrDefaultAsync();
 
-            if(contact == null)
+            if (contact == null)
             {
                 throw new NotFoundException(nameof(Contact), request.ContactId);
             }
 
-            return contact;
+            return contact.ToContactPreviewDto();
         }
     }
 }
