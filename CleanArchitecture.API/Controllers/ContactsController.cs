@@ -11,6 +11,7 @@ using CleanArchitecture.Application.Contacts.Commands.DeleteCommand;
 
 namespace CleanArchitecture.API.Controllers
 {
+    [Route("api/[controller]")]
     public class ContactsController : BaseController
     {
         [HttpGet]

@@ -9,7 +9,7 @@ namespace CleanArchitecture.Persistence
     public class DatabaseDbContext : DbContext
     {
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Activity> Activities { get; set; }
 
         public DatabaseDbContext(DbContextOptions<DatabaseDbContext> options)
             : base(options) { }

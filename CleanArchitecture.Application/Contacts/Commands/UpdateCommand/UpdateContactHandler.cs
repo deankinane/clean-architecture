@@ -2,20 +2,15 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Contacts.QueryObjects;
 using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Domain.Entities;
+using AutoMapper;
 
 namespace CleanArchitecture.Application.Contacts.Commands.UpdateCommand
 {
-    public class UpdateContactHandler : IRequestHandler<UpdateContactCommand>
+    public class UpdateContactHandler : RequestHandlerBase, IRequestHandler<UpdateContactCommand>
     {
-        private DatabaseDbContext _context;
-
-        public UpdateContactHandler(DatabaseDbContext context)
-        {
-            _context = context;
-        }
+        public UpdateContactHandler(DatabaseDbContext context) : base(context) { }
 
         public async Task<Unit> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
@@ -26,7 +21,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.UpdateCommand
                 throw new NotFoundException(nameof(Contact), request.ContactId);
             }
 
-            var contact = request.FromUpdateContactCommand();
+            var contact = Mapper.Map<Contact>(request);
 
             _context.Entry(contactToUpdate).CurrentValues.SetValues(contact);
 

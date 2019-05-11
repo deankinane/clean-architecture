@@ -4,9 +4,9 @@ using System.Text;
 
 namespace CleanArchitecture.Domain.Entities
 {
-    public class Task
+    public class Activity
     {
-        public int TaskId { get; set; }
+        public int ActivityId { get; set; }
         public string Notes { get; set; }
         public bool SoftDeleted { get; set; }
 

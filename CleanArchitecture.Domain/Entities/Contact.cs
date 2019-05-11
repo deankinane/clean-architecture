@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CleanArchitecture.Domain.Entities
 {
@@ -13,13 +12,13 @@ namespace CleanArchitecture.Domain.Entities
         public bool SoftDeleted { get; set; }
 
         // Declare related collections with a private set 
-        public ICollection<Task> Tasks { get; private set; }
+        public ICollection<Activity> Activities { get; private set; }
 
         // Initialise all collections in constructor so we never have to worry if 
         // they've been intialised or not elsehwhere in the code
         public Contact()
         {
-            Tasks = new HashSet<Task>();
+            Activities = new HashSet<Activity>();
         }
     }
 }

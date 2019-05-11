@@ -37,6 +37,8 @@ namespace CleanArchitecture.API
             // Add DbContext via extension method in application layer
             services.ConfigureDBContext(Configuration);
 
+            services.ConfigureAutoMapper();
+
             services.AddOpenApiDocument(document =>
             {
                 document.DocumentName = "v1";
@@ -60,7 +62,13 @@ namespace CleanArchitecture.API
             app.UseHttpsRedirection();
             app.UseMvc();
 
-            app.UseSwagger();
+            app.UseSwagger(settings =>
+            {
+                settings.PostProcess = (document, request) =>
+                {
+                    document.Info.Title = "Clean Architecture API";
+                };
+            });
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";

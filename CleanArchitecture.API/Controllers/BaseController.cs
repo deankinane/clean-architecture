@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class BaseController : Controller
     {

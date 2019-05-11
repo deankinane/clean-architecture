@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitecture.Persistence.Configurations
 {
-    public class TaskConfiguration : IEntityTypeConfiguration<Task>
+    public class ActivityConfiguration : IEntityTypeConfiguration<Activity>
     {
-        public void Configure(EntityTypeBuilder<Task> builder)
+        public void Configure(EntityTypeBuilder<Activity> builder)
         {
             builder.Property(x => x.Notes)
                 .HasColumnType("nvarchar(max)")
