@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Contacts.Queries.GetAllContactPreview;
-using CleanArchitecture.Application.Contacts.Queries.GetContactPreview;
-using CleanArchitecture.Application.Contacts.Queries.Models;
+using CleanArchitecture.Application.Contacts.Queries.GetContact;
+using CleanArchitecture.Application.Contacts.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CleanArchitecture.Application.Contacts.Queries.GetAllContacts;
+using CleanArchitecture.Application.Contacts.Commands.CreateContact;
+using CleanArchitecture.Application.Contacts.Commands.UpdateCommand;
+using CleanArchitecture.Application.Contacts.Commands.DeleteCommand;
 
 namespace CleanArchitecture.API.Controllers
 {
@@ -12,17 +15,43 @@ namespace CleanArchitecture.API.Controllers
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ContactPreviewDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ContactDto>>> GetAll()
         {
-            return Ok(await Mediator.Send(new GetAllContactPreviewQuery()));
+            return Ok(await Mediator.Send(new GetAllContactsQuery()));
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ContactPreviewDto>> Get(int id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ContactDto>> Get(int id)
         {
-            return Ok(await Mediator.Send(new GetContactPreviewQuery() { ContactId = id }));
+            return Ok(await Mediator.Send(new GetContactQuery() { ContactId = id }));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<int>> CreateContact(CreateContactCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateContact(UpdateContactCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteContact(int id)
+        {
+            return Ok(await Mediator.Send(new DeleteContactCommand() { ContactId = id }));
         }
     }
 }

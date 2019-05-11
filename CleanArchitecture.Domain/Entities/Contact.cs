@@ -10,9 +10,13 @@ namespace CleanArchitecture.Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public bool SoftDeleted { get; set; }
 
+        // Declare related collections with a private set 
         public ICollection<Task> Tasks { get; private set; }
 
+        // Initialise all collections in constructor so we never have to worry if 
+        // they've been intialised or not elsehwhere in the code
         public Contact()
         {
             Tasks = new HashSet<Task>();

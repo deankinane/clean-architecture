@@ -3,24 +3,24 @@ using System.Threading.Tasks;
 using CleanArchitecture.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using CleanArchitecture.Application.Contacts.Queries.Models;
-using CleanArchitecture.Application.Contacts.Queries.QueryObjects;
+using CleanArchitecture.Application.Contacts.DTOs;
+using CleanArchitecture.Application.Contacts.QueryObjects;
 using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Domain.Entities;
 using System.Linq;
 
-namespace CleanArchitecture.Application.Contacts.Queries.GetContactPreview
+namespace CleanArchitecture.Application.Contacts.Queries.GetContact
 {
-    public class GetContactPreviewHandler : IRequestHandler<GetContactPreviewQuery, ContactPreviewDto>
+    public class GetContactHandler : IRequestHandler<GetContactQuery, ContactDto>
     {
         private DatabaseDbContext _context;
 
-        public GetContactPreviewHandler(DatabaseDbContext context)
+        public GetContactHandler(DatabaseDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ContactPreviewDto> Handle(GetContactPreviewQuery request, CancellationToken cancellationToken)
+        public async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
             var contact = await _context.Contacts
                 .AsNoTracking()
@@ -34,7 +34,7 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetContactPreview
                 throw new NotFoundException(nameof(Contact), request.ContactId);
             }
 
-            return contact.ToContactPreviewDto();
+            return contact.ToContactDto();
         }
     }
 }

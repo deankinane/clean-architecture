@@ -1,26 +1,25 @@
-﻿using CleanArchitecture.Application.Contacts.Queries.Models;
-using CleanArchitecture.Application.Contacts.Queries.QueryObjects;
+﻿using CleanArchitecture.Application.Contacts.DTOs;
+using CleanArchitecture.Application.Contacts.Queries.GetAllContacts;
+using CleanArchitecture.Application.Contacts.QueryObjects;
 using CleanArchitecture.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetAllContactPreview
 {
-    public class GetAllContactPreviewHandler : IRequestHandler<GetAllContactPreviewQuery, IEnumerable<ContactPreviewDto>>
+    public class GetAllContactsHandler : IRequestHandler<GetAllContactsQuery, IEnumerable<ContactPreviewDto>>
     {
         private DatabaseDbContext _context;
 
-        public GetAllContactPreviewHandler(DatabaseDbContext context)
+        public GetAllContactsHandler(DatabaseDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<ContactPreviewDto>> Handle(GetAllContactPreviewQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ContactPreviewDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
             return await _context.Contacts
                 .AsNoTracking()

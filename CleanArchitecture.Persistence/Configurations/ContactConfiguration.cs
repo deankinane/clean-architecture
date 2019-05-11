@@ -20,6 +20,11 @@ namespace CleanArchitecture.Persistence.Configurations
 
             builder.Property(b => b.DateOfBirth)
                 .IsRequired();
+
+            builder.Property(b => b.SoftDeleted)
+                .HasDefaultValue(false);
+
+            builder.HasQueryFilter(b => b.SoftDeleted == false);
         }
     }
 }

@@ -2,7 +2,7 @@
 using CleanArchitecture.API.Filters;
 using CleanArchitecture.API.Pipeline;
 using CleanArchitecture.Application;
-using CleanArchitecture.Application.Contacts.Queries.GetContactPreview;
+using CleanArchitecture.Application.Contacts.Queries.GetContact;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -26,15 +26,15 @@ namespace CleanArchitecture.API
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Mediatr
-            services.AddMediatR(typeof(GetContactPreviewHandler).GetTypeInfo().Assembly);  
+            services.AddMediatR(typeof(GetContactHandler).GetTypeInfo().Assembly);  
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetContactPreviewValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetContactValidator>());
 
-            // Add DbContext
+            // Add DbContext via extension method in application layer
             services.ConfigureDBContext(Configuration);
 
             services.AddOpenApiDocument(document =>

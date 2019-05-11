@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.Contacts.Queries.Models;
+﻿using CleanArchitecture.Application.Contacts.DTOs;
 using CleanArchitecture.Domain.Entities;
 using System.Linq;
 
-namespace CleanArchitecture.Application.Contacts.Queries.QueryObjects
+namespace CleanArchitecture.Application.Contacts.QueryObjects
 {
     public static class MapToContactPreviewDto
     {
