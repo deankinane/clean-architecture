@@ -8,6 +8,7 @@ using CleanArchitecture.Application.Contacts.Queries.GetAllContacts;
 using CleanArchitecture.Application.Contacts.Commands.CreateContact;
 using CleanArchitecture.Application.Contacts.Commands.UpdateCommand;
 using CleanArchitecture.Application.Contacts.Commands.DeleteCommand;
+using CleanArchitecture.Application.Contacts.Commands.SendSmsToContact;
 
 namespace CleanArchitecture.API.Controllers
 {

@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CleanArchitecture.Application.Interfaces.SmsService;
-using CleanArchitecture.Adapters.SmsService;
+using CleanArchitecture.Adapters;
 
 namespace CleanArchitecture.API
 {
@@ -42,7 +41,7 @@ namespace CleanArchitecture.API
             services.ConfigureAutoMapper();
 
             // Add Adapters
-            services.AddTransient<ISmsService, SmsService>();
+            services.RegisterAdapters();
 
             // Add Swagger Document
             services.AddOpenApiDocument(document =>
