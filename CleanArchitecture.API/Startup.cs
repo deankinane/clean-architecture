@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using CleanArchitecture.API.Filters;
-using CleanArchitecture.API.Pipeline;
-using CleanArchitecture.Application;
+using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Contacts.Queries.GetContact;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -37,6 +36,7 @@ namespace CleanArchitecture.API
             // Add DbContext via extension method in application layer
             services.ConfigureDBContext(Configuration);
 
+            // Initialise AutoMapper mappings
             services.ConfigureAutoMapper();
 
             services.AddOpenApiDocument(document =>

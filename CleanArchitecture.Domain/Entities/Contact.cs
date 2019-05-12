@@ -20,5 +20,15 @@ namespace CleanArchitecture.Domain.Entities
         {
             Activities = new HashSet<Activity>();
         }
+
+        public string GetFullName()
+        {
+            return $"{FirstName} {LastName}";
+        }
+
+        public int GetNumberOfActivities()
+        {
+            return Activities.Count;
+        }
     }
 }

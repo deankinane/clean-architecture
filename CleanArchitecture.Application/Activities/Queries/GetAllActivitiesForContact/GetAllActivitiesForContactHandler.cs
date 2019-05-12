@@ -1,4 +1,6 @@
-﻿using CleanArchitecture.Domain.Entities;
+﻿using AutoMapper;
+using CleanArchitecture.Application.Activities.DTOs;
+using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,16 +11,20 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForContact
 {
-    public class GetAllActivitiesForContactHandler : RequestHandlerBase, IRequestHandler<GetAllActivitiesForContactQuery, List<Activity>>
+    public class GetAllActivitiesForContactHandler : RequestHandlerBase<GetAllActivitiesForContactQuery, List<ActivityPreviewDto>>
     {
         public GetAllActivitiesForContactHandler(DatabaseDbContext context) : base(context) { }
 
-        public Task<List<Activity>> Handle(GetAllActivitiesForContactQuery request, CancellationToken cancellationToken)
+        public override async Task<List<ActivityPreviewDto>> Handle(GetAllActivitiesForContactQuery request, CancellationToken cancellationToken)
         {
-            return _context.Activities
+            var list = await _context.Activities
                 .AsNoTracking()
+                .Include(x => x.ActivityType)
+                .Include(x => x.Contact)
                 .Where(x => x.ContactId == request.ContactId)
                 .ToListAsync(cancellationToken);
+
+            return Mapper.Map<List<ActivityPreviewDto>>(list);
         }
     }
 }

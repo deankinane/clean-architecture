@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contacts.DTOs;
 using CleanArchitecture.Application.Contacts.Queries.GetAllContacts;
+using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Persistence;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetAllContactPreview
 {
-    public class GetAllContactsHandler : RequestHandlerBase, IRequestHandler<GetAllContactsQuery, IEnumerable<ContactPreviewDto>>
+    public class GetAllContactsHandler : RequestHandlerBase<GetAllContactsQuery, IEnumerable<ContactPreviewDto>>
     {
         public GetAllContactsHandler(DatabaseDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<ContactPreviewDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
+        public override async Task<IEnumerable<ContactPreviewDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
             var contacts = await _context.Contacts
                 .AsNoTracking()

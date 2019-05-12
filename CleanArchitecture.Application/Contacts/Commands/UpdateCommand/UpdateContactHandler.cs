@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Domain.Entities;
 using AutoMapper;
+using CleanArchitecture.Application.Infrastructure;
 
 namespace CleanArchitecture.Application.Contacts.Commands.UpdateCommand
 {
-    public class UpdateContactHandler : RequestHandlerBase, IRequestHandler<UpdateContactCommand>
+    public class UpdateContactHandler : RequestHandlerBase<UpdateContactCommand>
     {
         public UpdateContactHandler(DatabaseDbContext context) : base(context) { }
 
-        public async Task<Unit> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
+        public override async Task<Unit> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
             var contactToUpdate = await _context.Contacts.FindAsync(request.ContactId);
 

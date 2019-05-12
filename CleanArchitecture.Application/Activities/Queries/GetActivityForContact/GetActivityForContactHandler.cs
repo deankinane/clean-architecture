@@ -1,20 +1,19 @@
-﻿using CleanArchitecture.Application.Exceptions;
+﻿using AutoMapper;
+using CleanArchitecture.Application.Activities.DTOs;
+using CleanArchitecture.Application.Exceptions;
+using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForContact
 {
-    public class GetActivityForContactHandler : RequestHandlerBase, IRequestHandler<GetActivityForContactQuery, Activity>
+    public class GetActivityForContactHandler : RequestHandlerBase<GetActivityForContactQuery, ActivityDto>
     {
         public GetActivityForContactHandler(DatabaseDbContext context) : base(context) { }
 
-        public async Task<Activity> Handle(GetActivityForContactQuery request, CancellationToken cancellationToken)
+        public override async Task<ActivityDto> Handle(GetActivityForContactQuery request, CancellationToken cancellationToken)
         {
             var activity = await _context.Activities
                 .FindAsync(request.ActivityId);
@@ -29,7 +28,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
                 throw new BadRequestException(nameof(Contact), request.ContactId, nameof(Activity), request.ActivityId);
             }
 
-            return activity;
+            return Mapper.Map<ActivityDto>(activity);
         }
     }
 }

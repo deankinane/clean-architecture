@@ -8,10 +8,11 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Application.Contacts.DTOs;
 using CleanArchitecture.Application.Contacts.Commands.CreateContact;
 using CleanArchitecture.Application.Contacts.Commands.UpdateCommand;
+using CleanArchitecture.Application.Activities.DTOs;
 
-namespace CleanArchitecture.Application
+namespace CleanArchitecture.Application.Infrastructure
 {
-    public static class ServiceExtensions
+    public static class Configuration
     {
         public static void ConfigureDBContext(this IServiceCollection services, IConfiguration config)
         {
@@ -23,15 +24,16 @@ namespace CleanArchitecture.Application
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<CreateActivityCommand, Activity>();
-
-                cfg.CreateMap<Contact, ContactPreviewDto>()
-                .ForMember(dto => dto.DisplayName, opt => opt.MapFrom(c => $"{c.FirstName} {c.LastName}"))
-                .ForMember(dto => dto.NumActivities, opt => opt.MapFrom(c => c.Activities.Count));
-
+                // Contact Mappings
+                cfg.CreateMap<Contact, ContactPreviewDto>();
                 cfg.CreateMap<Contact, ContactDto>();
                 cfg.CreateMap<CreateContactCommand, Contact>();
                 cfg.CreateMap<UpdateContactCommand, Contact>();
+
+                // Activity Mappings
+                cfg.CreateMap<CreateActivityCommand, Activity>();
+                cfg.CreateMap<Activity, ActivityPreviewDto>();
+                cfg.CreateMap<Activity, ActivityDto>();
             });
         }
     }

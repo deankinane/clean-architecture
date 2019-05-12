@@ -14,6 +14,9 @@ namespace CleanArchitecture.Application.Activities.Commands.CreateActivity
 
             RuleFor(x => x.Notes)
                 .NotEmpty();
+
+            RuleFor(x => x.ActivityTypeId)
+                .NotEmpty();
         }
     }
 }
