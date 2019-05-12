@@ -12,7 +12,7 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetAllContactPreview
 {
     public class GetAllContactsHandler : RequestHandlerBase<GetAllContactsQuery, IEnumerable<ContactPreviewDto>>
     {
-        public GetAllContactsHandler(DatabaseDbContext context) : base(context) { }
+        public GetAllContactsHandler(IDatabaseDbContext context) : base(context) { }
 
         public override async Task<IEnumerable<ContactPreviewDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {

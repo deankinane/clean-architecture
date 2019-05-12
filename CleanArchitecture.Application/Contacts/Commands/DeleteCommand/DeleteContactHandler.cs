@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Exceptions;
+using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence;
 using MediatR;
@@ -10,16 +11,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Contacts.Commands.DeleteCommand
 {
-    public class DeleteContactHandler : IRequestHandler<DeleteContactCommand>
+    public class DeleteContactHandler : RequestHandlerBase<DeleteContactCommand>
     {
-        private DatabaseDbContext _context;
-
-        public DeleteContactHandler(DatabaseDbContext context)
+        public DeleteContactHandler(IDatabaseDbContext context) : base(context)
         {
-            _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
+        public override async Task<Unit> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
         {
             var contactToDelete = await _context.Contacts.FindAsync(request.ContactId);
 

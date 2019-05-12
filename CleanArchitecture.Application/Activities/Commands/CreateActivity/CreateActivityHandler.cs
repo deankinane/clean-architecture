@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence;
 using MediatR;
@@ -7,16 +8,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Activities.Commands.CreateActivity
 {
-    public class CreateActivityHandler : IRequestHandler<CreateActivityCommand, int>
+    public class CreateActivityHandler : RequestHandlerBase<CreateActivityCommand, int>
     {
-        private DatabaseDbContext _context;
-
-        public CreateActivityHandler(DatabaseDbContext context)
+        public CreateActivityHandler(IDatabaseDbContext context) : base(context)
         {
-            _context = context;
         }
 
-        public async Task<int> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
+        public override async Task<int> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
             var newActivity = await _context.Activities.AddAsync(Mapper.Map<Activity>(request), cancellationToken);
             await _context.SaveChangesAsync();

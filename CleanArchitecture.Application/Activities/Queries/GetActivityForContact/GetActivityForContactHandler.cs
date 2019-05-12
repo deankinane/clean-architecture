@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 {
     public class GetActivityForContactHandler : RequestHandlerBase<GetActivityForContactQuery, ActivityDto>
     {
-        public GetActivityForContactHandler(DatabaseDbContext context) : base(context) { }
+        public GetActivityForContactHandler(IDatabaseDbContext context) : base(context) { }
 
         public override async Task<ActivityDto> Handle(GetActivityForContactQuery request, CancellationToken cancellationToken)
         {

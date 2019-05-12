@@ -13,7 +13,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 {
     public class GetAllActivitiesForContactHandler : RequestHandlerBase<GetAllActivitiesForContactQuery, List<ActivityPreviewDto>>
     {
-        public GetAllActivitiesForContactHandler(DatabaseDbContext context) : base(context) { }
+        public GetAllActivitiesForContactHandler(IDatabaseDbContext context) : base(context) { }
 
         public override async Task<List<ActivityPreviewDto>> Handle(GetAllActivitiesForContactQuery request, CancellationToken cancellationToken)
         {

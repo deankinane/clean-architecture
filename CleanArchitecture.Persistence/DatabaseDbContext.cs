@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Persistence
 {
-    public class DatabaseDbContext : DbContext
+    public class DatabaseDbContext : DbContext, IDatabaseDbContext
     {
         // Entities
         public DbSet<Contact> Contacts { get; set; }

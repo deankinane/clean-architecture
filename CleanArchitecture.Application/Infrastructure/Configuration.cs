@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.Infrastructure
         public static void ConfigureDBContext(this IServiceCollection services, IConfiguration config)
         {
             var connString = config["ConnectionString"];
-            services.AddDbContext<DatabaseDbContext>(o => o.UseSqlServer(connString));
+            services.AddDbContext<IDatabaseDbContext, DatabaseDbContext>(o => o.UseSqlServer(connString));
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)

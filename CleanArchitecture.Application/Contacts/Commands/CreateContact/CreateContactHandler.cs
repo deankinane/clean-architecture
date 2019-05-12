@@ -9,7 +9,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.CreateContact
 {
     public class CreateContactHandler : RequestHandlerBase<CreateContactCommand, int>
     {
-        public CreateContactHandler(DatabaseDbContext context) : base(context) { }
+        public CreateContactHandler(IDatabaseDbContext context) : base(context) { }
 
         public override async Task<int> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {

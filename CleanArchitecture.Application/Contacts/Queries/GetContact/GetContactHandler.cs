@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetContact
 {
     public class GetContactHandler : RequestHandlerBase<GetContactQuery, ContactDto>
     {
-        public GetContactHandler(DatabaseDbContext context) : base(context) { }
+        public GetContactHandler(IDatabaseDbContext context) : base(context) { }
 
         public override async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
