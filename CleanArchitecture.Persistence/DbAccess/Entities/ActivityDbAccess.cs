@@ -1,13 +1,11 @@
 ﻿using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Persistence.DbAccess
+namespace CleanArchitecture.Persistence.DbAccess.Entities
 {
     public class ActivityDbAccess : EntityDbAccessBase
     {

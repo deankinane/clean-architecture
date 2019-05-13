@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CleanArchitecture.Persistence.DbAccess.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
