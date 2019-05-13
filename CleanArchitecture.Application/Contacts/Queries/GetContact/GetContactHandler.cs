@@ -6,22 +6,19 @@ using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Domain.Entities;
 using AutoMapper;
 using CleanArchitecture.Application.Infrastructure;
+using CleanArchitecture.Persistence.DbAccess;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetContact
 {
     public class GetContactHandler : RequestHandlerBase<GetContactQuery, ContactDto>
     {
-        public GetContactHandler(IDatabaseDbContext context) : base(context) { }
+        public GetContactHandler(IDbAccess db) : base(db)
+        {
+        }
 
         public override async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
-            var contact = await _context.Contacts
-                .FindAsync(request.ContactId);
-
-            if (contact == null)
-            {
-                throw new NotFoundException(nameof(Contact), request.ContactId);
-            }
+            var contact = await _db.Contacts.GetContact(request.ContactId);
 
             return Mapper.Map<ContactDto>(contact);
         }

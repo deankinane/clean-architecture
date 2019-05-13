@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Interfaces.SmsService;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence;
+using CleanArchitecture.Persistence.DbAccess;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
     {
         private ISmsService _smsService;
 
-        public SendSmsToContactHandler(IDatabaseDbContext context, ISmsService smsService) : base(context)
+        public SendSmsToContactHandler(IDbAccess db, ISmsService smsService) : base(db)
         {
             _smsService = smsService;
         }
@@ -23,12 +24,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
         public override async Task<bool> Handle(SendSmsToContactCommand request, CancellationToken cancellationToken)
         {
             // Check contact id is valid
-            var contact = await _context.Contacts.FindAsync(request.ContactId);
-
-            if (contact == null)
-            {
-                throw new NotFoundException(nameof(Contact), request.ContactId);
-            }
+            var contact = await _db.Contacts.GetContact(request.ContactId);
 
             // Get sms account detials from database
             var account = new SmsAccountDetials()
@@ -51,8 +47,8 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
                 ActivityTypeId = 4
             };
 
-            await _context.Activities.AddAsync(activity);
-            await _context.SaveChangesAsync();
+            await _db.Activities.CreateActivty(activity);
+            await _db.SaveChangesAsync();
 
             return true;
         }

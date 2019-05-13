@@ -9,17 +9,12 @@ using CleanArchitecture.Application.Contacts.DTOs;
 using CleanArchitecture.Application.Contacts.Commands.CreateContact;
 using CleanArchitecture.Application.Contacts.Commands.UpdateCommand;
 using CleanArchitecture.Application.Activities.DTOs;
+using CleanArchitecture.Persistence.DbAccess;
 
 namespace CleanArchitecture.Application.Infrastructure
 {
-    public static class Configuration
+    public static class ConfigureDependencyInjection
     {
-        public static void ConfigureDBContext(this IServiceCollection services, IConfiguration config)
-        {
-            var connString = config["ConnectionString"];
-            services.AddDbContext<IDatabaseDbContext, DatabaseDbContext>(o => o.UseSqlServer(connString));
-        }
-
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
             Mapper.Initialize(cfg =>

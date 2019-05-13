@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence;
+using CleanArchitecture.Persistence.DbAccess;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,15 +11,17 @@ namespace CleanArchitecture.Application.Activities.Commands.CreateActivity
 {
     public class CreateActivityHandler : RequestHandlerBase<CreateActivityCommand, int>
     {
-        public CreateActivityHandler(IDatabaseDbContext context) : base(context)
+        public CreateActivityHandler(IDbAccess db) : base(db)
         {
         }
 
         public override async Task<int> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
-            var newActivity = await _context.Activities.AddAsync(Mapper.Map<Activity>(request), cancellationToken);
-            await _context.SaveChangesAsync();
-            return newActivity.Entity.ActivityId;
+            var activity = Mapper.Map<Activity>(request);
+            await _db.Activities.CreateActivty(activity);
+            await _db.SaveChangesAsync();
+
+            return activity.ActivityId;
         }
     }
 }

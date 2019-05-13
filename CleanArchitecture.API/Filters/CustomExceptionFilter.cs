@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Exceptions;
+using CleanArchitecture.Persistence.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
