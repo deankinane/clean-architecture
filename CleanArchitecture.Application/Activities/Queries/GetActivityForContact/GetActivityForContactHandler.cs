@@ -3,7 +3,7 @@ using CleanArchitecture.Application.Activities.DTOs;
 using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Persistence;
+using CleanArchitecture.Persistence.DbAccess;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,24 +11,20 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 {
     public class GetActivityForContactHandler : RequestHandlerBase<GetActivityForContactQuery, ActivityDto>
     {
-        public GetActivityForContactHandler(IDatabaseDbContext context) : base(context) { }
+        public GetActivityForContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
+        {
+        }
 
         public override async Task<ActivityDto> Handle(GetActivityForContactQuery request, CancellationToken cancellationToken)
         {
-            var activity = await _context.Activities
-                .FindAsync(request.ActivityId);
-
-            if(activity == null)
-            {
-                throw new NotFoundException(nameof(Activity), request.ActivityId);
-            }
+            var activity = await _db.Activities.GetActivity(request.ActivityId);
 
             if (activity.ContactId != request.ContactId)
             {
                 throw new BadRequestException(nameof(Contact), request.ContactId, nameof(Activity), request.ActivityId);
             }
 
-            return Mapper.Map<ActivityDto>(activity);
+            return _mapper.Map<ActivityDto>(activity);
         }
     }
 }

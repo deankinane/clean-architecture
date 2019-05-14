@@ -1,29 +1,23 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Persistence;
 using CleanArchitecture.Application.Contacts.DTOs;
-using CleanArchitecture.Application.Exceptions;
-using CleanArchitecture.Domain.Entities;
 using AutoMapper;
 using CleanArchitecture.Application.Infrastructure;
+using CleanArchitecture.Persistence.DbAccess;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetContact
 {
     public class GetContactHandler : RequestHandlerBase<GetContactQuery, ContactDto>
     {
-        public GetContactHandler(IDatabaseDbContext context) : base(context) { }
+        public GetContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
+        {
+        }
 
         public override async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
-            var contact = await _context.Contacts
-                .FindAsync(request.ContactId);
+            var contact = await _db.Contacts.GetContactById(request.ContactId);
 
-            if (contact == null)
-            {
-                throw new NotFoundException(nameof(Contact), request.ContactId);
-            }
-
-            return Mapper.Map<ContactDto>(contact);
+            return _mapper.Map<ContactDto>(contact);
         }
     }
 }

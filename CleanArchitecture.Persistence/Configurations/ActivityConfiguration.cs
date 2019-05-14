@@ -10,7 +10,7 @@ namespace CleanArchitecture.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Activity> builder)
         {
             builder.Property(x => x.Notes)
-                .HasColumnType("nvarchar(max)")
+                .HasMaxLength(500)
                 .IsRequired();
 
             builder.Property(x => x.SoftDeleted)

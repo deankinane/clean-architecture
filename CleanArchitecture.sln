@@ -3,21 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.API", "CleanArchitecture.API\CleanArchitecture.API.csproj", "{3C60F13E-5C8A-45E5-B50C-80D7B53EC6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.API", "CleanArchitecture.API\CleanArchitecture.API.csproj", "{3C60F13E-5C8A-45E5-B50C-80D7B53EC6EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5EF96CF2-CD23-46B1-BAAD-3F8129BEB70A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C14841D0-3279-4886-979B-4D9B288250D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Domain", "CleanArchitecture.Domain\CleanArchitecture.Domain.csproj", "{56335D8B-24AF-4358-BD94-E17FA97C7386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Domain", "CleanArchitecture.Domain\CleanArchitecture.Domain.csproj", "{56335D8B-24AF-4358-BD94-E17FA97C7386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Persistence", "CleanArchitecture.Persistence\CleanArchitecture.Persistence.csproj", "{60BB8E7B-16B2-40A9-8610-360C384C3CC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Persistence", "CleanArchitecture.Persistence\CleanArchitecture.Persistence.csproj", "{60BB8E7B-16B2-40A9-8610-360C384C3CC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{6149EC88-33DB-421C-A724-528FECEBEF45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Application", "CleanArchitecture.Application\CleanArchitecture.Application.csproj", "{A58DF760-4689-4D8A-A259-B139FFA5E585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Application", "CleanArchitecture.Application\CleanArchitecture.Application.csproj", "{A58DF760-4689-4D8A-A259-B139FFA5E585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Adapters", "CleanArchitecture.Adapters\CleanArchitecture.Adapters.csproj", "{DC31894B-EEA1-46C9-AB13-FDC2F5A578A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Adapters", "CleanArchitecture.Adapters\CleanArchitecture.Adapters.csproj", "{DC31894B-EEA1-46C9-AB13-FDC2F5A578A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{39A12A2A-026D-40E8-8277-A47F14332F94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Domain.Tests", "CleanArchitecture.Domain.Tests\CleanArchitecture.Domain.Tests.csproj", "{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Application.Tests", "CleanArchitecture.Application.Tests\CleanArchitecture.Application.Tests.csproj", "{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,14 @@ Global
 		{DC31894B-EEA1-46C9-AB13-FDC2F5A578A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC31894B-EEA1-46C9-AB13-FDC2F5A578A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC31894B-EEA1-46C9-AB13-FDC2F5A578A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +69,8 @@ Global
 		{60BB8E7B-16B2-40A9-8610-360C384C3CC8} = {5EF96CF2-CD23-46B1-BAAD-3F8129BEB70A}
 		{A58DF760-4689-4D8A-A259-B139FFA5E585} = {6149EC88-33DB-421C-A724-528FECEBEF45}
 		{DC31894B-EEA1-46C9-AB13-FDC2F5A578A5} = {6149EC88-33DB-421C-A724-528FECEBEF45}
+		{A7DC6D58-3630-465D-BB60-3EC073B5D6E9} = {39A12A2A-026D-40E8-8277-A47F14332F94}
+		{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3} = {39A12A2A-026D-40E8-8277-A47F14332F94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73A95B3C-C725-4A20-A8B6-2A018A5DF8D0}

@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Activities.DTOs;
 using CleanArchitecture.Application.Infrastructure;
-using CleanArchitecture.Persistence;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using CleanArchitecture.Persistence.DbAccess;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,18 +10,15 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 {
     public class GetAllActivitiesForContactHandler : RequestHandlerBase<GetAllActivitiesForContactQuery, List<ActivityPreviewDto>>
     {
-        public GetAllActivitiesForContactHandler(IDatabaseDbContext context) : base(context) { }
+        public GetAllActivitiesForContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
+        {
+        }
 
         public override async Task<List<ActivityPreviewDto>> Handle(GetAllActivitiesForContactQuery request, CancellationToken cancellationToken)
         {
-            var list = await _context.Activities
-                .AsNoTracking()
-                .Include(x => x.ActivityType)
-                .Include(x => x.Contact)
-                .Where(x => x.ContactId == request.ContactId)
-                .ToListAsync(cancellationToken);
+            var list = await _db.Activities.GetActivitiesForContact(request.ContactId);
 
-            return Mapper.Map<List<ActivityPreviewDto>>(list);
+            return _mapper.Map<List<ActivityPreviewDto>>(list);
         }
     }
 }
