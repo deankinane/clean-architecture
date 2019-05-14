@@ -9,13 +9,13 @@ namespace CleanArchitecture.Application.Contacts.Commands.CreateContact
 {
     public class CreateContactHandler : RequestHandlerBase<CreateContactCommand, int>
     {
-        public CreateContactHandler(IDbAccess db) : base(db)
+        public CreateContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
         {
         }
 
         public override async Task<int> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
-            var contact = Mapper.Map<Contact>(request);
+            var contact = _mapper.Map<Contact>(request);
 
             await _db.Contacts.AddContact(contact);
             await _db.SaveChangesAsync();

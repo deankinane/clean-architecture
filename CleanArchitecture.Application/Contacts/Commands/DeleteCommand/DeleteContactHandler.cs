@@ -1,12 +1,7 @@
-﻿using CleanArchitecture.Application.Exceptions;
+﻿using AutoMapper;
 using CleanArchitecture.Application.Infrastructure;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Persistence;
 using CleanArchitecture.Persistence.DbAccess;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +9,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.DeleteCommand
 {
     public class DeleteContactHandler : RequestHandlerBase<DeleteContactCommand>
     {
-        public DeleteContactHandler(IDbAccess db) : base(db)
+        public DeleteContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
         {
         }
 

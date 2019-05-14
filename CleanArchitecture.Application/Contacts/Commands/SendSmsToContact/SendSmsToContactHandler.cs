@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Exceptions;
+﻿using AutoMapper;
+using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Interfaces.SmsService;
 using CleanArchitecture.Domain.Entities;
@@ -16,7 +17,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
     {
         private ISmsService _smsService;
 
-        public SendSmsToContactHandler(IDbAccess db, ISmsService smsService) : base(db)
+        public SendSmsToContactHandler(IDbAccess db, IMapper mapper, ISmsService smsService) : base(db, mapper)
         {
             _smsService = smsService;
         }
@@ -24,7 +25,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
         public override async Task<bool> Handle(SendSmsToContactCommand request, CancellationToken cancellationToken)
         {
             // Check contact id is valid
-            var contact = await _db.Contacts.GetContact(request.ContactId);
+            var contact = await _db.Contacts.GetContactById(request.ContactId);
 
             // Get sms account detials from database
             var account = new SmsAccountDetials()

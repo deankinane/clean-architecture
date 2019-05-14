@@ -6,12 +6,12 @@ namespace CleanArchitecture.Persistence.DbAccess
 {
     public class DbAccess : IDbAccess
     {
-        private IDatabaseDbContext _context;
+        private DatabaseDbContext _context;
 
         public ContactDbAccess Contacts { get; }
         public ActivityDbAccess Activities { get; }
 
-        public DbAccess(IDatabaseDbContext context)
+        public DbAccess(DatabaseDbContext context)
         {
             _context = context;
             Contacts = new ContactDbAccess(context);

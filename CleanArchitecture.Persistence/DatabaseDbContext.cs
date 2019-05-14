@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Persistence
 {
-    public class DatabaseDbContext : DbContext, IDatabaseDbContext
+    public class DatabaseDbContext : DbContext
     {
         // Entities
         public DbSet<Contact> Contacts { get; set; }

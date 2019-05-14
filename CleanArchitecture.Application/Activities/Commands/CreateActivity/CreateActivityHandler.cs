@@ -11,13 +11,13 @@ namespace CleanArchitecture.Application.Activities.Commands.CreateActivity
 {
     public class CreateActivityHandler : RequestHandlerBase<CreateActivityCommand, int>
     {
-        public CreateActivityHandler(IDbAccess db) : base(db)
+        public CreateActivityHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
         {
         }
 
         public override async Task<int> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
-            var activity = Mapper.Map<Activity>(request);
+            var activity = _mapper.Map<Activity>(request);
             await _db.Activities.CreateActivty(activity);
             await _db.SaveChangesAsync();
 

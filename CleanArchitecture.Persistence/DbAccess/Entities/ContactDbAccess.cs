@@ -9,7 +9,7 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
 {
     public class ContactDbAccess : EntityDbAccessBase
     {
-        public ContactDbAccess(IDatabaseDbContext context) : base(context)
+        public ContactDbAccess(DatabaseDbContext context) : base(context)
         {
         }
 
@@ -21,7 +21,7 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
                 .ToListAsync();
         }
 
-        public async Task<Contact> GetContact(int contactId)
+        public async Task<Contact> GetContactById(int contactId)
         {
             var contact = await _context.Contacts.FindAsync(contactId);
 

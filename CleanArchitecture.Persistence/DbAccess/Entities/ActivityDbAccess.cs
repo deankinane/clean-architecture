@@ -9,7 +9,7 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
 {
     public class ActivityDbAccess : EntityDbAccessBase
     {
-        public ActivityDbAccess(IDatabaseDbContext context) : base(context)
+        public ActivityDbAccess(DatabaseDbContext context) : base(context)
         {
         }
 

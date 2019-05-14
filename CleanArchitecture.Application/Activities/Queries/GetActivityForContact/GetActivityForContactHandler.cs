@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 {
     public class GetActivityForContactHandler : RequestHandlerBase<GetActivityForContactQuery, ActivityDto>
     {
-        public GetActivityForContactHandler(IDbAccess db) : base(db)
+        public GetActivityForContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
         {
         }
 
@@ -24,7 +24,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
                 throw new BadRequestException(nameof(Contact), request.ContactId, nameof(Activity), request.ActivityId);
             }
 
-            return Mapper.Map<ActivityDto>(activity);
+            return _mapper.Map<ActivityDto>(activity);
         }
     }
 }

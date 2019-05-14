@@ -1,11 +1,10 @@
-﻿
-namespace CleanArchitecture.Persistence.DbAccess.Entities
+﻿namespace CleanArchitecture.Persistence.DbAccess.Entities
 {
     public abstract class EntityDbAccessBase
     {
-        protected IDatabaseDbContext _context;
+        protected DatabaseDbContext _context;
 
-        protected EntityDbAccessBase(IDatabaseDbContext context)
+        protected EntityDbAccessBase(DatabaseDbContext context)
         {
             _context = context;
         }

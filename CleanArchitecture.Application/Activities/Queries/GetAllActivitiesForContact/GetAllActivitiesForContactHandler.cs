@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 {
     public class GetAllActivitiesForContactHandler : RequestHandlerBase<GetAllActivitiesForContactQuery, List<ActivityPreviewDto>>
     {
-        public GetAllActivitiesForContactHandler(IDbAccess db) : base(db)
+        public GetAllActivitiesForContactHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
         {
         }
 
@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
         {
             var list = await _db.Activities.GetActivitiesForContact(request.ContactId);
 
-            return Mapper.Map<List<ActivityPreviewDto>>(list);
+            return _mapper.Map<List<ActivityPreviewDto>>(list);
         }
     }
 }
