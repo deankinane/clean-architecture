@@ -7,9 +7,8 @@ namespace CleanArchitecture.Persistence.Infrastructure
 {
     public static class ConfigureDependencyInjection
     {
-        public static void ConfigureDBContext(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureDBContext(this IServiceCollection services, string connString)
         {
-            var connString = config["ConnectionString"];
             services.AddDbContext<DatabaseDbContext>(o => o.UseSqlServer(connString));
             services.AddTransient<IDbAccess, DbAccess.DbAccess>();
         }

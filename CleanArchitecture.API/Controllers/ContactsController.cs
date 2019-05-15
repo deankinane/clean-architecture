@@ -9,10 +9,12 @@ using CleanArchitecture.Application.Contacts.Commands.CreateContact;
 using CleanArchitecture.Application.Contacts.Commands.UpdateCommand;
 using CleanArchitecture.Application.Contacts.Commands.DeleteCommand;
 using CleanArchitecture.Application.Contacts.Commands.SendSmsToContact;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CleanArchitecture.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class ContactsController : BaseController
     {
         [HttpGet]

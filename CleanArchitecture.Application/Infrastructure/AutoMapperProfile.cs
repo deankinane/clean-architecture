@@ -4,6 +4,7 @@ using CleanArchitecture.Application.Activities.DTOs;
 using CleanArchitecture.Application.Contacts.Commands.CreateContact;
 using CleanArchitecture.Application.Contacts.Commands.UpdateCommand;
 using CleanArchitecture.Application.Contacts.DTOs;
+using CleanArchitecture.Application.Users.DTOs;
 using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.Application.Infrastructure
@@ -12,6 +13,7 @@ namespace CleanArchitecture.Application.Infrastructure
     {
         public AutoMapperProfile()
         {
+            // Contact Mappings
             CreateMap<Contact, ContactPreviewDto>();
             CreateMap<Contact, ContactDto>();
             CreateMap<CreateContactCommand, Contact>();
@@ -21,6 +23,10 @@ namespace CleanArchitecture.Application.Infrastructure
             CreateMap<CreateActivityCommand, Activity>();
             CreateMap<Activity, ActivityPreviewDto>();
             CreateMap<Activity, ActivityDto>();
+
+            // User Mappings
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }
