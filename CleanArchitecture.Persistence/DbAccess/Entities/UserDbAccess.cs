@@ -14,24 +14,23 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
         public UserDbAccess(DatabaseDbContext context) : base(context)
         {
         }
+
         public User GetUserById(int userId)
         {
             return _context.Users.Find(userId);
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public Task<User> GetUserByUsername(string username)
         {
-            var user = await _context.Users
+            return _context.Users
                 .Where(x => x.Username == username)
                 .DefaultIfEmpty(null)
                 .FirstOrDefaultAsync();
+        }
 
-            if(user == null)
-            {
-                throw new NotFoundException(nameof(User), username);
-            }
-
-            return user;
+        public async Task CreateUser(User user)
+        {
+            await _context.Users.AddAsync(user);
         }
     }
 }

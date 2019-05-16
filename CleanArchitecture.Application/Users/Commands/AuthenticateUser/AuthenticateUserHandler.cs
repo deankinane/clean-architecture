@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Users.DTOs;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence.DbAccess;
-using CleanArchitecture.Persistence.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Users.Commands
+namespace CleanArchitecture.Application.Users.Commands.AuthenticateUser
 {
     public class AuthenticateUserHandler : RequestHandlerBase<AuthenticateUserCommand, UserDto>
     {
@@ -22,9 +19,9 @@ namespace CleanArchitecture.Application.Users.Commands
         {
             var user = await _db.Users.GetUserByUsername(request.Username);
 
-            if (!User.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (user == null || !User.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return null;
+                throw new BadRequestException("Username or password is not correct.");
             }
 
             return _mapper.Map<UserDto>(user);

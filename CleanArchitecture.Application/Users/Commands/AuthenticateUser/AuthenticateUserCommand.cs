@@ -1,10 +1,7 @@
 ﻿using CleanArchitecture.Application.Users.DTOs;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CleanArchitecture.Application.Users.Commands
+namespace CleanArchitecture.Application.Users.Commands.AuthenticateUser
 {
     public class AuthenticateUserCommand : IRequest<UserDto>
     {

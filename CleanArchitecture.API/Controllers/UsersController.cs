@@ -6,8 +6,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArchitecture.API.Settings;
-using CleanArchitecture.Application.Users.Commands;
+using CleanArchitecture.Application.Users.Commands.AuthenticateUser;
+using CleanArchitecture.Application.Users.Commands.RegisterUser;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace CleanArchitecture.API.Controllers
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class UsersController : BaseController
     {
         private AppSettings _appSettings;
@@ -30,11 +33,6 @@ namespace CleanArchitecture.API.Controllers
         public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserCommand command)
         {
             var user = await Mediator.Send(command);
-
-            if(user == null)
-            {
-                return Unauthorized();
-            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -59,6 +57,13 @@ namespace CleanArchitecture.API.Controllers
                 user.LastName,
                 Token = tokenString
             });
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
+        {
+            return Ok(await Mediator.Send(command));
         }
     }
 }

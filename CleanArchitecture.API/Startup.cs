@@ -17,6 +17,9 @@ using CleanArchitecture.Persistence.DbAccess;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using CleanArchitecture.API.Settings;
+using NSwag;
+using System.Linq;
+using NSwag.SwaggerGeneration.Processors.Security;
 
 namespace CleanArchitecture.API
 {
@@ -58,8 +61,15 @@ namespace CleanArchitecture.API
             // Add Swagger Document
             services.AddOpenApiDocument(document =>
             {
-                document.DocumentName = "v1";
-                //document.ApiGroupNames = new[] { "1" };
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new SwaggerSecurityScheme
+                {
+                    Type = SwaggerSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = SwaggerSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+
+                document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
 
             // Add Authentication
@@ -114,8 +124,8 @@ namespace CleanArchitecture.API
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseAuthentication();
+            app.UseMvc();
 
             app.UseSwagger(settings =>
             {
