@@ -11,6 +11,16 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
         {
             RuleFor(x => x.ContactId)
                 .NotEmpty();
+
+            // ToDo Add custom validator for mobile phone numbers
+            RuleFor(x => x.fromNumber)
+                .NotEmpty();
+
+            RuleFor(x => x.toNumber)
+                .NotEmpty();
+
+            RuleFor(x => x.message)
+                .NotEmpty();
         }
     }
 }
