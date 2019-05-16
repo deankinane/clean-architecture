@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CleanArchitecture.API.Settings;
 using CleanArchitecture.Application.Users.Commands.AuthenticateUser;
 using CleanArchitecture.Application.Users.Commands.RegisterUser;
+using CleanArchitecture.Application.Users.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,7 +31,7 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpPost]
         [Route("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserCommand command)
+        public async Task<ActionResult<UserDto>> Authenticate([FromBody] AuthenticateUserCommand command)
         {
             var user = await Mediator.Send(command);
 
@@ -48,15 +49,10 @@ namespace CleanArchitecture.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
+            user.Token = tokenString;
+
             // return basic user info (without password) and token to store client side
-            return Ok(new
-            {
-                user.UserId,
-                user.Username,
-                user.FirstName,
-                user.LastName,
-                Token = tokenString
-            });
+            return Ok(user);
         }
 
         [HttpPost]
