@@ -4,14 +4,16 @@ using CleanArchitecture.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleanArchitecture.Persistence.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    partial class DatabaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190515210853_added-user-table")]
+    partial class addedusertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,12 +82,10 @@ namespace CleanArchitecture.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                        .IsRequired();
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                        .IsRequired();
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired();
@@ -94,8 +94,7 @@ namespace CleanArchitecture.Persistence.Migrations
                         .IsRequired();
 
                     b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                        .IsRequired();
 
                     b.HasKey("UserId");
 

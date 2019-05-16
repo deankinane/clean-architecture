@@ -11,6 +11,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArchitecture.Adapters;
 using CleanArchitecture.Persistence.Infrastructure;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using CleanArchitecture.Persistence.DbAccess;
+using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using CleanArchitecture.API.Settings;
+using NSwag;
+using System.Linq;
+using NSwag.SwaggerGeneration.Processors.Security;
 
 namespace CleanArchitecture.API
 {
@@ -35,8 +44,13 @@ namespace CleanArchitecture.API
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetContactValidator>());
 
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+
             // Add DbContext via extension method in application layer
-            services.ConfigureDBContext(Configuration);
+            services.ConfigureDBContext(appSettings.ConnectionString);
 
             // Initialise AutoMapper mappings
             services.ConfigureAutoMapper();
@@ -47,8 +61,52 @@ namespace CleanArchitecture.API
             // Add Swagger Document
             services.AddOpenApiDocument(document =>
             {
-                document.DocumentName = "v1";
-                //document.ApiGroupNames = new[] { "1" };
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new SwaggerSecurityScheme
+                {
+                    Type = SwaggerSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = SwaggerSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+
+                document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
+
+            // Add Authentication
+            // configure jwt authentication
+            var secret = appSettings.Secret;
+            var key = Encoding.ASCII.GetBytes(secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IDbAccess>();
+                        var userId = int.Parse(context.Principal.Identity.Name);
+                        var user = userService.Users.GetUserById(userId);
+                        if (user == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 
@@ -66,6 +124,7 @@ namespace CleanArchitecture.API
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
 
             app.UseSwagger(settings =>

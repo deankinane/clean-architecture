@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Adapters"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{39A12A2A-026D-40E8-8277-A47F14332F94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Domain.Tests", "CleanArchitecture.Domain.Tests\CleanArchitecture.Domain.Tests.csproj", "{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Domain.Tests", "CleanArchitecture.Domain.Tests\CleanArchitecture.Domain.Tests.csproj", "{A7DC6D58-3630-465D-BB60-3EC073B5D6E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Application.Tests", "CleanArchitecture.Application.Tests\CleanArchitecture.Application.Tests.csproj", "{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Application.Tests", "CleanArchitecture.Application.Tests\CleanArchitecture.Application.Tests.csproj", "{185DA1E2-C4BB-4812-814D-0CDB0F52A0C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

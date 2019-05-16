@@ -11,6 +11,11 @@ namespace CleanArchitecture.Application.Exceptions
         {
         }
 
+        public BadRequestException(string message)
+            : base(message)
+        {
+        }
+
         public BadRequestException(string principalName, object principalKey, string dependentName, object dependentKey)
             : base($"Dependent entity \"{dependentName}\" ({dependentKey}) does not belong to principal entity \"{principalName}\" ({principalKey}).")
         {

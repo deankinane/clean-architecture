@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.Activities.Commands.CreateActivity;
 using CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForContact;
 using CleanArchitecture.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.API.Controllers
 {
     [Route("api/Contacts/{contactId}/Activities")]
-    [ApiController]
+    [Authorize]
     public class ActivitiesController : BaseController
     {
         [HttpGet]
