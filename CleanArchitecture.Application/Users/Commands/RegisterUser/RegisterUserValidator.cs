@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using System;
+using CleanArchitecture.Application.Infrastructure.Validators;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,10 +16,10 @@ namespace CleanArchitecture.Application.Users.Commands.RegisterUser
                 .NotEmpty();
 
             RuleFor(x => x.Username)
-                .MinimumLength(8);
+                .MustHaveValidEmailAddressFormat();
 
             RuleFor(x => x.Password)
-                .MinimumLength(8);
+                .MustBeStrongPassword();
         }
     }
 }

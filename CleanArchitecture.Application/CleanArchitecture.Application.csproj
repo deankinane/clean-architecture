@@ -15,8 +15,4 @@
     <ProjectReference Include="..\CleanArchitecture.Persistence\CleanArchitecture.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Validators\" />
-  </ItemGroup>
-
 </Project>
