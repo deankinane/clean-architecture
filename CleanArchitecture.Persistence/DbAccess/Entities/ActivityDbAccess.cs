@@ -1,5 +1,4 @@
 ﻿using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Persistence.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,24 +17,17 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
             await _context.Activities.AddAsync(activity);
         }
 
-        public async Task<Activity> GetActivity(int activityId)
+        public Task<Activity> GetActivity(int activityId)
         {
-            var activity = await _context.Activities
+            return _context.Activities
                 .FindAsync(activityId);
-
-            if (activity == null)
-            {
-                throw new NotFoundException(nameof(Activity), activityId);
-            }
-
-            return activity;
         }
 
         public async Task<List<Activity>> GetActivitiesForContact(int contactId)
         {
-            if(await _context.Contacts.FindAsync(contactId) == null)
+            if (await _context.Contacts.FindAsync(contactId) == null)
             {
-                throw new NotFoundException(nameof(Contact), contactId);
+                return null;
             }
 
             return await _context.Activities

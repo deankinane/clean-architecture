@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Activities.DTOs;
+using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Infrastructure;
+using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence.DbAccess;
 using System.Collections.Generic;
 using System.Threading;
@@ -17,6 +19,11 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
         public override async Task<List<ActivityPreviewDto>> Handle(GetAllActivitiesForContactQuery request, CancellationToken cancellationToken)
         {
             var list = await _db.Activities.GetActivitiesForContact(request.ContactId);
+
+            if (list == null)
+            {
+                throw new NotFoundException(nameof(Contact), request.ContactId);
+            }
 
             return _mapper.Map<List<ActivityPreviewDto>>(list);
         }

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CleanArchitecture.API.Filters;
+using CleanArchitecture.API.Infrastructure;
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Contacts.Queries.GetContact;
 using FluentValidation.AspNetCore;
@@ -13,8 +13,6 @@ using CleanArchitecture.Adapters;
 using CleanArchitecture.Persistence.Infrastructure;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using CleanArchitecture.Persistence.DbAccess;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using CleanArchitecture.API.Settings;
 using NSwag;
@@ -83,21 +81,7 @@ namespace CleanArchitecture.API
             })
             .AddJwtBearer(x =>
             {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IDbAccess>();
-                        var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.Users.GetUserById(userId);
-                        if (user == null)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
+                x.Events = new AuthenticationEvents();
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
