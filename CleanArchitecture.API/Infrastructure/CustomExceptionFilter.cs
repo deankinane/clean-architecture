@@ -1,12 +1,11 @@
 ﻿using CleanArchitecture.Application.Exceptions;
-using CleanArchitecture.Persistence.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
 
-namespace CleanArchitecture.API.Filters
+namespace CleanArchitecture.API.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute

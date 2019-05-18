@@ -4,6 +4,8 @@ using CleanArchitecture.Application.Contacts.DTOs;
 using AutoMapper;
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Persistence.DbAccess;
+using CleanArchitecture.Application.Exceptions;
+using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.Application.Contacts.Queries.GetContact
 {
@@ -16,6 +18,11 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetContact
         public override async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
             var contact = await _db.Contacts.GetContactById(request.ContactId);
+
+            if (contact == null)
+            {
+                throw new NotFoundException(nameof(Contact), request.ContactId);
+            }
 
             return _mapper.Map<ContactDto>(contact);
         }

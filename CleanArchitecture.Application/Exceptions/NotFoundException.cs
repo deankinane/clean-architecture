@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace CleanArchitecture.Persistence.Exceptions
+namespace CleanArchitecture.Application.Exceptions
 {
     public class NotFoundException : Exception
     {

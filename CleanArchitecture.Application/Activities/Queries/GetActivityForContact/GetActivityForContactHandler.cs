@@ -19,6 +19,11 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
         {
             var activity = await _db.Activities.GetActivity(request.ActivityId);
 
+            if (activity == null)
+            {
+                throw new NotFoundException(nameof(Activity), request.ActivityId);
+            }
+
             if (activity.ContactId != request.ContactId)
             {
                 throw new BadRequestException(nameof(Contact), request.ContactId, nameof(Activity), request.ActivityId);

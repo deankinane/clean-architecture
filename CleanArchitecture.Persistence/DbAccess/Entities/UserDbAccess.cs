@@ -1,10 +1,6 @@
 ﻿using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Persistence.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Persistence.DbAccess.Entities
@@ -15,9 +11,9 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
         {
         }
 
-        public User GetUserById(int userId)
+        public Task<User> GetUserById(int userId)
         {
-            return _context.Users.Find(userId);
+            return _context.Users.FindAsync(userId);
         }
 
         public Task<User> GetUserByUsername(string username)

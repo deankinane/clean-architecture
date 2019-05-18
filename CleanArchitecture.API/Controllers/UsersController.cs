@@ -31,6 +31,7 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpPost]
         [Route("authenticate")]
+        [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Authenticate([FromBody] AuthenticateUserCommand command)
         {
             var user = await Mediator.Send(command);
@@ -57,6 +58,7 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpPost]
         [Route("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
             return Ok(await Mediator.Send(command));
