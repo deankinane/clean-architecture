@@ -36,7 +36,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
 
             var sent = _smsService.SendMessage(account, request.fromNumber, request.toNumber, request.message);
 
-            if (sent)
+            if (!sent)
             {
                 return false;
             }
