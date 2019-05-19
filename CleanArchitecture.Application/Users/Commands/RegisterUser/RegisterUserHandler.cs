@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.Users.Commands.RegisterUser
 
         public override async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            if (await _db.Users.GetUserByUsername(request.Username) != null)
+            if (await _db.Users.GeByUsername(request.Username) != null)
             {
                 throw new BadRequestException("Username is already registerd");
             }
@@ -29,13 +29,9 @@ namespace CleanArchitecture.Application.Users.Commands.RegisterUser
                 Username = request.Username
             };
 
-            byte[] passwordHash, passwordSalt;
-            User.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+            newUser.CreatePasswordHash(request.Password);
 
-            newUser.PasswordHash = passwordHash;
-            newUser.PasswordSalt = passwordSalt;
-
-            await _db.Users.CreateUser(newUser);
+            await _db.Users.Create(newUser);
             await _db.SaveChangesAsync();
 
             return Unit.Value;

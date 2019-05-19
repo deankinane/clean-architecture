@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.Users.Queries.GetUserById
 
         public override async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _db.Users.GetUserById(request.UserId);
+            var user = await _db.Users.GetById(request.UserId);
 
             if (user == null)
             {

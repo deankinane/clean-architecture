@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.Activities.Queries.GetAllActivitiesForCo
 
         public override async Task<ActivityDto> Handle(GetActivityForContactQuery request, CancellationToken cancellationToken)
         {
-            var activity = await _db.Activities.GetActivity(request.ActivityId);
+            var activity = await _db.Activities.GetById(request.ActivityId);
 
             if (activity == null)
             {

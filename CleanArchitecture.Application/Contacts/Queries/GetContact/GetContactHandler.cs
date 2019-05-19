@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetContact
 
         public override async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
-            var contact = await _db.Contacts.GetContactById(request.ContactId);
+            var contact = await _db.Contacts.GetById(request.ContactId);
 
             if (contact == null)
             {

@@ -2,7 +2,6 @@
 using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Users.DTOs;
-using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence.DbAccess;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,9 +16,9 @@ namespace CleanArchitecture.Application.Users.Commands.AuthenticateUser
 
         public override async Task<UserDto> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _db.Users.GetUserByUsername(request.Username);
+            var user = await _db.Users.GeByUsername(request.Username);
 
-            if (user == null || !User.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (user == null || !user.VerifyPasswordHash(request.Password))
             {
                 throw new BadRequestException("Username or password is not correct.");
             }

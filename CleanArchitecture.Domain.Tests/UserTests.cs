@@ -13,13 +13,16 @@ namespace CleanArchitecture.Domain.Tests
         {
             // Arrange
             var password = string.Empty;
-            byte[] passwordBytes;
-            byte[] saltBytes;
+            var user = new User()
+            {
+                PasswordHash = new byte[64],
+                PasswordSalt = new byte[128]
+            };
 
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => User.CreatePasswordHash(password, out passwordBytes, out saltBytes));
+            Assert.Throws<ArgumentException>(() => user.CreatePasswordHash(password));
         }
 
         [Fact]
@@ -27,35 +30,33 @@ namespace CleanArchitecture.Domain.Tests
         {
             // Arrange
             var password = "password123";
-            byte[] passwordBytes;
-            byte[] saltBytes;
+            var user = new User();
 
             // Act
-            User.CreatePasswordHash(password, out passwordBytes, out saltBytes);
+            user.CreatePasswordHash(password);
 
             // Assert
-            Assert.NotNull(passwordBytes);
-            Assert.Equal(64, passwordBytes.Length);
+            Assert.NotNull(user.PasswordHash);
+            Assert.Equal(64, user.PasswordHash.Length);
 
-            Assert.NotNull(saltBytes);
-            Assert.Equal(128, saltBytes.Length);
+            Assert.NotNull(user.PasswordSalt);
+            Assert.Equal(128, user.PasswordSalt.Length);
         }
 
         [Fact]
         public void VerifyPasswordHash_Should_throw_argument_exception_when_data_not_valid()
         {
             // Arrange
-            var password = "password123";
-            byte[] bytes128 = new byte[128];
-            byte[] bytes64 = new byte[64];
-            byte[] bytes1 = new byte[1];
+            var user = new User()
+            {
+                PasswordHash = new byte[64],
+                PasswordSalt = new byte[128]
+            };
 
             // Act
 
             // Assert
-            Assert.Throws<ArgumentException>(() => User.VerifyPasswordHash(string.Empty, bytes64, bytes128));
-            Assert.Throws<ArgumentException>(() => User.VerifyPasswordHash(password, bytes1, bytes128));
-            Assert.Throws<ArgumentException>(() => User.VerifyPasswordHash(password, bytes64, bytes1));
+            Assert.Throws<ArgumentException>(() => user.VerifyPasswordHash(string.Empty));
         }
 
         [Fact]
@@ -63,12 +64,11 @@ namespace CleanArchitecture.Domain.Tests
         {
             // Arrange
             var password = "password123";
-            byte[] passwordBytes;
-            byte[] saltBytes;
+            var user = new User();
 
             // Act
-            User.CreatePasswordHash(password, out passwordBytes, out saltBytes);
-            var result = User.VerifyPasswordHash(password, passwordBytes, saltBytes);
+            user.CreatePasswordHash(password);
+            var result = user.VerifyPasswordHash(password);
 
             // Assert
             Assert.True(result);
@@ -80,12 +80,11 @@ namespace CleanArchitecture.Domain.Tests
             // Arrange
             var password = "password123";
             var passwordWrong = "wrongpassword";
-            byte[] passwordBytes;
-            byte[] saltBytes;
+            var user = new User();
 
             // Act
-            User.CreatePasswordHash(password, out passwordBytes, out saltBytes);
-            var result = User.VerifyPasswordHash(passwordWrong, passwordBytes, saltBytes);
+            user.CreatePasswordHash(password);
+            var result = user.VerifyPasswordHash(passwordWrong);
 
             // Assert
             Assert.False(result);

@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.CreateContact
         {
             var contact = _mapper.Map<Contact>(request);
 
-            await _db.Contacts.AddContact(contact);
+            await _db.Contacts.Create(contact);
             await _db.SaveChangesAsync();
 
             return contact.ContactId;

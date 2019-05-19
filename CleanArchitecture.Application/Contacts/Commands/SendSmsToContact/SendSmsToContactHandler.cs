@@ -25,7 +25,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
         public override async Task<bool> Handle(SendSmsToContactCommand request, CancellationToken cancellationToken)
         {
             // Check contact id is valid
-            var contact = await _db.Contacts.GetContactById(request.ContactId);
+            var contact = await _db.Contacts.GetById(request.ContactId);
 
             // Get sms account detials from database
             var account = new SmsAccountDetials()
@@ -48,7 +48,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.SendSmsToContact
                 ActivityTypeId = 4
             };
 
-            await _db.Activities.CreateActivty(activity);
+            await _db.Activities.Create(activity);
             await _db.SaveChangesAsync();
 
             return true;

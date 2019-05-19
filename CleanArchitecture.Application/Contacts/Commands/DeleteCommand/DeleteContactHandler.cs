@@ -15,7 +15,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.DeleteCommand
 
         public override async Task<Unit> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
         {
-            await _db.Contacts.DeleteContact(request.ContactId);
+            await _db.Contacts.Delete(request.ContactId);
             await _db.SaveChangesAsync();
 
             return Unit.Value;

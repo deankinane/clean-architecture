@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Activities.Commands.CreateActivity
         public override async Task<int> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _mapper.Map<Activity>(request);
-            await _db.Activities.CreateActivty(activity);
+            await _db.Activities.Create(activity);
             await _db.SaveChangesAsync();
 
             return activity.ActivityId;

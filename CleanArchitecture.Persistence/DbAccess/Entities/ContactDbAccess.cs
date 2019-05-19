@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Persistence.DbAccess.Entities
 {
-    public class ContactDbAccess : EntityDbAccessBase
+    public class ContactDbAccess : EntityDbAccessBase<Contact>
     {
         public ContactDbAccess(DatabaseDbContext context) : base(context)
         {
         }
 
-        public Task<List<Contact>> GetAllContacts()
+        public override Task<List<Contact>> GetAll()
         {
             return _context.Contacts
                 .AsNoTracking()
@@ -20,17 +20,17 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
                 .ToListAsync();
         }
 
-        public Task<Contact> GetContactById(int contactId)
+        public override Task<Contact> GetById(int id)
         {
-            return _context.Contacts.FindAsync(contactId);
+            return _context.Contacts.FindAsync(id);
         }
 
-        public async Task AddContact(Contact contact)
+        public async override Task Create(Contact contact)
         {
             await _context.Contacts.AddAsync(contact);
         }
 
-        public async Task UpdateContact(Contact contact)
+        public async override Task Update(Contact contact)
         {
             var contactToUpdate = await _context.Contacts
                 .AsNoTracking()
@@ -41,7 +41,7 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
             _context.Contacts.Update(contact);
         }
 
-        public async Task DeleteContact(int contactId)
+        public async override Task Delete(int contactId)
         {
             var contactToDelete = await _context.Contacts.FindAsync(contactId);
             contactToDelete.SoftDeleted = true;

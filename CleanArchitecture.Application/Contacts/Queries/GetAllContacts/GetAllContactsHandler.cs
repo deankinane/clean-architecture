@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Contacts.Queries.GetAllContacts
 
         public override async Task<List<ContactPreviewDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
-            var contacts = await _db.Contacts.GetAllContacts();
+            var contacts = await _db.Contacts.GetAll();
 
             return _mapper.Map<List<ContactPreviewDto>>(contacts);
         }
