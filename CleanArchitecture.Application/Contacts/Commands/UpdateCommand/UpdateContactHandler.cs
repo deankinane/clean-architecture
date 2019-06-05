@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Contacts.Commands.UpdateCommand
         {
             var contact = _mapper.Map<Contact>(request);
 
-            await _db.Contacts.Update(contact);
+            _db.Contacts.Update(contact);
             await _db.SaveChangesAsync();
 
             return Unit.Value;
