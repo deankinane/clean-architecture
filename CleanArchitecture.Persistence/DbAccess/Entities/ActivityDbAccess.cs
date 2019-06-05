@@ -12,32 +12,6 @@ namespace CleanArchitecture.Persistence.DbAccess.Entities
         {
         }
 
-        public async override Task Create(Activity activity)
-        {
-            await _context.Activities.AddAsync(activity);
-        }
-
-        public override Task<Activity> GetById(int activityId)
-        {
-            return _context.Activities
-                .FindAsync(activityId);
-        }
-
-        public override Task<List<Activity>> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Task Update(Activity entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Task Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<List<Activity>> GetActivitiesForContact(int contactId)
         {
             if (await _context.Contacts.FindAsync(contactId) == null)
