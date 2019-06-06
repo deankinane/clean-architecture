@@ -24,10 +24,12 @@ namespace CleanArchitecture.API.Controllers
             return Ok(await Mediator.Send(new GetAllContactsQuery()));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ContactDto>> Get(int id)
         {
             return Ok(await Mediator.Send(new GetContactQuery() { ContactId = id }));

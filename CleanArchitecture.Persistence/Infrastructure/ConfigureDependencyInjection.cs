@@ -1,6 +1,7 @@
-﻿using CleanArchitecture.Persistence.DbAccess;
+﻿using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Persistence.DbAccess;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.Persistence.Infrastructure
@@ -11,6 +12,22 @@ namespace CleanArchitecture.Persistence.Infrastructure
         {
             services.AddDbContext<DatabaseDbContext>(o => o.UseSqlServer(connString));
             services.AddTransient<IDbAccess, DbAccess.DbAccess>();
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            services.AddIdentityCore<User>()
+                .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddEntityFrameworkStores<DatabaseDbContext>();
+                
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = true;
+            });
         }
     }
 }
