@@ -11,9 +11,8 @@ namespace CleanArchitecture.Persistence
     {
         public DatabaseDbContext CreateDbContext(string[] args)
         {
-            var devConnString = "Server=localhost;Database=CleanArchitectureDB;Trusted_Connection=True;";
-            //var devConnString = "Server=DESKTOP-DC5S096\\SQLEXPRESS;Database=CleanArchitectureDB;Trusted_Connection=True;";
-
+            var devConnString = "Server=localhost\\sqlexpress;Database=CleanArchitectureDB;Trusted_Connection=True;";
+            
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseDbContext>();
             optionsBuilder.UseSqlServer(devConnString,
                 b => b.MigrationsAssembly(typeof(ContextFactoryForMigrations).GetTypeInfo().Assembly.GetName().Name));

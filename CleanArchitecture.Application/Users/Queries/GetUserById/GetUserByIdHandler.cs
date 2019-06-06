@@ -4,6 +4,7 @@ using CleanArchitecture.Application.Infrastructure;
 using CleanArchitecture.Application.Users.DTOs;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence.DbAccess;
+using Microsoft.AspNetCore.Identity;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,13 +12,17 @@ namespace CleanArchitecture.Application.Users.Queries.GetUserById
 {
     public class GetUserByIdHandler : RequestHandlerBase<GetUserByIdQuery, UserDto>
     {
-        public GetUserByIdHandler(IDbAccess db, IMapper mapper) : base(db, mapper)
+        private UserManager<User> _userManager;
+
+        public GetUserByIdHandler(IDbAccess db, IMapper mapper, UserManager<User> userManager) 
+            : base(db, mapper)
         {
+            _userManager = userManager;
         }
 
         public override async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _db.Users.GetById(request.UserId);
+            var user = await _userManager.FindByIdAsync(request.UserId);
 
             if (user == null)
             {

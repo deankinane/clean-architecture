@@ -11,7 +11,7 @@ namespace CleanArchitecture.API.Infrastructure
     {
         public override async Task TokenValidated(TokenValidatedContext context)
         {
-            var userId = int.Parse(context.Principal.Identity.Name);
+            var userId = context.Principal.Identity.Name;
             var mediator = context.HttpContext.RequestServices.GetRequiredService<IMediator>();
 
             try

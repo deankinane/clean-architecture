@@ -8,6 +8,6 @@ namespace CleanArchitecture.Application.Users.Queries.GetUserById
 {
     public class GetUserByIdQuery : IRequest<UserDto>
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

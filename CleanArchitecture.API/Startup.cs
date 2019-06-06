@@ -14,10 +14,10 @@ using CleanArchitecture.Persistence.Infrastructure;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using CleanArchitecture.API.Settings;
 using NSwag;
 using System.Linq;
 using NSwag.SwaggerGeneration.Processors.Security;
+using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.API
 {
@@ -49,7 +49,7 @@ namespace CleanArchitecture.API
 
             // Add DbContext via extension method in application layer
             services.ConfigureDBContext(appSettings.ConnectionString);
-
+            services.ConfigureIdentity();
             // Initialise AutoMapper mappings
             services.ConfigureAutoMapper();
 
